@@ -1,0 +1,59 @@
+{
+  "name": "dsh-mattpocock-skills",
+  "version": "1.0.0",
+  "description": "Matt Pocock's agent skills (mattpocock/skills) for DeepSeek Harness: grilling, spec/ticket flows, TDD, code review, domain modelling and more, packaged as a DSH plugin and as a portable SKILL.md directory bundle.",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "skills",
+    "cordis.patch.yml",
+    "README.md",
+    "README.zh.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "flatten": "bash scripts/update.sh",
+    "check": "node scripts/check.mjs"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "skills",
+    "skill",
+    "agents",
+    "engineering",
+    "tdd",
+    "code-review",
+    "grilling",
+    "domain-modeling"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "sherlockmen"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sherlockmen/dsh-mattpocock-skills-plugin.git"
+  },
+  "homepage": "https://github.com/sherlockmen/dsh-mattpocock-skills-plugin#readme",
+  "bugs": {
+    "url": "https://github.com/sherlockmen/dsh-mattpocock-skills-plugin/issues"
+  },
+  "dependencies": {
+    "yaml": "^2.9.0"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1"
+  }
+}

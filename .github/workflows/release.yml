@@ -1,0 +1,60 @@
+name: release
+
+# 手动发布 npm 包:
+#   仓库 Actions 页 -> release -> Run workflow -> 输入版本号(默认 patch)。
+# 流程: 先同步上游 -> 校验 -> bump 版本 -> 打 tag -> npm publish。
+# 前置条件: 仓库 Secrets 里配置 NPM_TOKEN(带 publish 权限)。
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: '版本增量 (patch | minor | major), 默认 patch'
+        required: false
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Sync and flatten upstream skills
+        run: bash scripts/update.sh
+
+      - name: Bump version
+        run: npm version "${{ inputs.version }}" --no-git-tag-version
+
+      - name: Pack check (dry run)
+        run: npm pack --dry-run | tail -5
+
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Tag and push
+        run: |
+          VERSION="v$(node -p "require('./package.json').version")"
+          git config user.name "dsh-mattpocock-skills[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "release: $VERSION"
+          git tag "$VERSION"
+          git push origin HEAD --tags

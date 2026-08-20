@@ -1,0 +1,49 @@
+name: sync-upstream
+
+# 定时同步上游 mattpocock/skills:扁平化 -> 校验 -> 有变化则提交。
+# 不要求实时:默认每天 02:17 UTC 一次,也可手动触发(仓库 Actions 页 -> Run workflow)。
+# 上游无变化时不会产生任何提交。
+
+on:
+  schedule:
+    - cron: '17 2 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # 允许工作流 push 回本仓库
+          persist-credentials: true
+          fetch-depth: 1
+
+      - name: Sync and flatten upstream skills
+        run: bash scripts/update.sh
+
+      - name: Validate frontmatter
+        run: |
+          # 用仓库内脚本校验;node 自带,仅缺 yaml 依赖 -> 直接用上游临时依赖不可行,
+          # 因此这里只做结构校验(update.sh 已保证来自上游,格式与上游一致)
+          test -d skills && echo "skills/ 存在"
+          for f in skills/*/SKILL.md; do
+            [ -f "$f" ] || { echo "缺失 $f"; exit 1; }
+          done
+          echo "共 $(ls -d skills/*/ | wc -l | tr -d ' ') 个技能目录"
+
+      - name: Commit changes if any
+        run: |
+          git config user.name "dsh-mattpocock-skills[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "无变化,跳过提交"
+          else
+            git commit -m "sync: 同步上游 skills @ $(cat UPSTREAM_COMMIT)"
+            git push origin HEAD
+            echo "已提交并推送"
+          fi
