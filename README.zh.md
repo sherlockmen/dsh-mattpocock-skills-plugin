@@ -26,6 +26,7 @@
 
 - [✨ 特性](#-特性)
 - [🚀 快速开始](#-快速开始)
+- [🎮 在 DSH 中使用](#-在-dsh-中使用)
 - [🔄 保持更新](#-保持更新)
 - [🧠 模型能看到哪些技能?](#-模型能看到哪些技能)
 - [📦 技能清单](#-技能清单)
@@ -77,6 +78,35 @@ dsh plugin --profile <名字> add dsh-mattpocock-skills
 
 ---
 
+## 🎮 在 DSH 中使用
+
+**一句话:安装方式只决定技能"从哪来";装好之后,触发方式与 DSH 里任何 skill 完全一样,没有特殊用法。**
+
+DSH 通过**两条触发路径**暴露技能:
+
+### 1. 模型自动触发 —— 15 个技能,全自动
+
+模型会在会话的 skill 目录里看到它们,任务匹配时**自行加载**,你只需要正常描述需求:
+
+> "帮我 review 一下这个分支" → 模型自动加载 `code-review`
+> "用 TDD 的方式实现这个功能" → 模型自动加载 `tdd`
+
+你什么都不用做。
+
+### 2. 用户手动触发 —— 全部 35 个技能,按需调用
+
+在消息里输入 **`/技能名`**,或在输入框输入 **`/`** 弹出**技能菜单**选择(20 个 `disable-model-invocation` 技能在菜单里带"仅限用户"标记):
+
+> `/grill-me` —— 开始一场 grilling,把计划/设计问清楚
+> `/to-spec` —— 把功能需求转成 spec
+> `/code-review` —— 从某个固定点开始 review diff
+
+触发后,DSH 会把**完整技能指令注入本轮对话**,模型随即按指令行事——与 Claude Code 斜杠命令完全同一套确定性管线:`/名字` token 由 DSH 的 pre-step 手势边界识别,技能正文被内联到你的提示词旁边,模型甚至不需要再去调 `skill` 工具。
+
+> ⚠️ **注意:** 与内置命令同名的 `/名字`(例如 `/help`)会解析为命令,而不是技能。
+
+---
+
 ## 🔄 保持更新
 
 上游更新频繁;本仓库通过 GitHub Actions **每天自动同步**,你最多落后一天。你这边:
@@ -94,9 +124,9 @@ dsh plugin --profile <名字> add dsh-mattpocock-skills
 上游把 35 个里的 **20 个**标了 `disable-model-invocation: true`——它们是"人主动触发"的交互式流程。DSH 完整尊重这个语义:
 
 - ✅ **15 个**出现在模型的 skill 目录,例如 `tdd`、`code-review`、`diagnosing-bugs`、`domain-modeling`、`research`、`grilling`、`wizard`。
-- 👆 **20 个**不进模型目录,但你在对话里**点名**(例如 *"用 grill-me"*)时,内容会被注入——与上游"故意触发"的设计一致。
+- 👆 **20 个**不进模型目录,但输入它们的 `/名字`(例如 `/grill-me`)时,完整指令会被注入本轮对话——与上游"故意触发"的设计一致。
 
-想让某个技能对模型可见:删掉它 `SKILL.md` frontmatter 里的 `disable-model-invocation: true` 即可。
+想让某个技能对模型可见:删掉它 `SKILL.md` frontmatter 里的 `disable-model-invocation: true` 即可。完整的触发说明见 [🎮 在 DSH 中使用](#-在-dsh-中使用)。
 
 > ⚠️ **Claude 特有内容:** 不少技能引用了 `agents/` 子代理 prompt 文件与 Claude Code 机制(`/setup-matt-pocock-skills`、`docs/agents/issue-tracker.md`)。它们在 DSH 里能正常加载——模型可通过技能的 resource 目录读取被引用的文件——但这些流程是按 Claude 的代理模型写的,可能需要小幅适配。
 
@@ -190,6 +220,20 @@ DSH 的文件系统 skill provider **只扫一层**:`<根>/<名字>/SKILL.md`。
 </details>
 
 <details>
+<summary><b>装好后到底怎么触发技能?</b></summary>
+
+见 [🎮 在 DSH 中使用](#-在-dsh-中使用)。一句话:15 个模型可调用技能由模型按需自动加载;其余的在消息里输入 `/技能名`(或输入 `/` 打开菜单),技能指令会被注入该轮对话。
+
+</details>
+
+<details>
+<summary><b>目录包和 npm 插件用起来有区别吗?</b></summary>
+
+没有。两者都汇入同一个 `ctx.skills` 注册表,触发方式、目录可见性、更新体验完全一致;区别只在技能是怎么装到机器上的。
+
+</details>
+
+<details>
 <summary><b>我可以修改技能吗?</b></summary>
 
 可以。用 `install.sh --copy`(或直接改 `skills/<名字>/SKILL.md`)——文件归你。每日自动同步只在上游内容变化时才提交,只要上游文件没变,你的本地修改就不会被覆盖。
@@ -215,6 +259,8 @@ DSH 的文件系统 skill provider **只扫一层**:`<根>/<名字>/SKILL.md`。
 
 <div align="center">
 
-**⭐ 觉得有用就点个 Star——它让同步保持诚实。⭐**
+**如果这个项目对你有帮助,欢迎 ⭐ Star——只需要一秒,却能让更多人发现这些技能。**
+
+遇到问题或想提需求?开一个 [Issue](https://github.com/sherlockmen/dsh-mattpocock-skills-plugin/issues) 或直接发 PR——你的反馈会让这份封装越来越好。
 
 </div>

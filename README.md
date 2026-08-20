@@ -26,6 +26,7 @@ Auto-synced daily from [mattpocock/skills](https://github.com/mattpocock/skills)
 
 - [✨ Features](#-features)
 - [🚀 Quick Start](#-quick-start)
+- [🎮 How to Use in DSH](#-how-to-use-in-dsh)
 - [🔄 Staying Up-to-Date](#-staying-up-to-date)
 - [🧠 Which Skills Does the Model See?](#-which-skills-does-the-model-see)
 - [📦 Skill List](#-skill-list)
@@ -77,6 +78,35 @@ Restart DSH. The plugin registers all 35 skills at runtime.
 
 ---
 
+## 🎮 How to Use in DSH
+
+**Short answer: the install mode only decides *where the skills come from* — once installed, triggering is identical to any other DSH skill. There is no special usage.**
+
+DSH exposes skills through **two trigger paths**:
+
+### 1. Model-driven — 15 skills, fully automatic
+
+The model sees these in its session skill catalog and **loads them on its own** when the task matches. Just describe what you want:
+
+> "Review this branch" → the model auto-loads `code-review`
+> "Implement this feature TDD-style" → the model auto-loads `tdd`
+
+Nothing for you to do.
+
+### 2. User-triggered — all 35 skills, on demand
+
+Type **`/skill-name`** anywhere in your message, or type **`/`** in the input box to open the **skill menu** and pick one (the 20 `disable-model-invocation` skills appear there marked "user-only"):
+
+> `/grill-me` — start a grilling session to sharpen a plan
+> `/to-spec` — turn a feature request into a spec
+> `/code-review` — review the diff since a fixed point
+
+When you do, DSH **injects the full skill instructions into that turn**, and the model follows them — the same deterministic pipeline as Claude Code's slash commands. The `/name` token is recognized by DSH's pre-step gesture handler; the skill body is inlined right next to your prompt, so the model doesn't even need to call the `skill` tool for it.
+
+> ⚠️ **Note:** a `/name` token that collides with a built-in command (e.g. `/help`) resolves as the command, not a skill.
+
+---
+
 ## 🔄 Staying Up-to-Date
 
 Upstream moves fast; this repo **auto-syncs daily** via GitHub Actions, so you're never more than a day behind. Your side:
@@ -94,9 +124,9 @@ Upstream moves fast; this repo **auto-syncs daily** via GitHub Actions, so you'r
 Upstream marks **20 of 35** skills `disable-model-invocation: true` — interactive workflows meant to be triggered deliberately. DSH honors this exactly:
 
 - ✅ **15 skills** appear in the model's skill catalog, e.g. `tdd`, `code-review`, `diagnosing-bugs`, `domain-modeling`, `research`, `grilling`, `wizard`.
-- 👆 **20 skills** stay out of the model catalog, but naming one in your prompt (e.g. *"use grill-me"*) injects its content — the same deliberate-trigger flow upstream intends.
+- 👆 **20 skills** stay out of the model catalog, but typing their `/name` (e.g. `/grill-me`) injects the full instructions into the turn — the same deliberate-trigger flow upstream intends.
 
-To make a skill model-visible, delete `disable-model-invocation: true` from its `SKILL.md` frontmatter.
+To make a skill model-visible, delete `disable-model-invocation: true` from its `SKILL.md` frontmatter. For the full trigger walkthrough, see [🎮 How to Use in DSH](#-how-to-use-in-dsh).
 
 > ⚠️ **Claude-specific content:** many skills reference `agents/` sub-agent prompt files and Claude Code mechanics (`/setup-matt-pocock-skills`, `docs/agents/issue-tracker.md`). They load fine in DSH — the model can read referenced files via the skill's resource directory — but those flows were written for Claude's agent model and may need light adaptation.
 
@@ -190,6 +220,20 @@ They carry `disable-model-invocation: true` upstream: interactive flows designed
 </details>
 
 <details>
+<summary><b>How do I actually trigger a skill in DSH?</b></summary>
+
+See [🎮 How to Use in DSH](#-how-to-use-in-dsh). In one line: the model auto-loads the 15 model-invocable skills when relevant; for everything else, type `/skill-name` (or `/` to open the menu) and the skill's instructions are injected into that turn.
+
+</details>
+
+<details>
+<summary><b>Do the directory bundle and the npm plugin behave differently?</b></summary>
+
+No. Both feed the same `ctx.skills` registry, so triggering, catalog visibility, and updates are identical. The only difference is how the skills get onto your machine.
+
+</details>
+
+<details>
 <summary><b>Can I modify a skill?</b></summary>
 
 Yes. Use `install.sh --copy` (or edit `skills/<name>/SKILL.md` directly) — files are yours. The daily auto-sync only commits when upstream content changes, so local edits survive as long as the upstream file doesn't change.
@@ -215,6 +259,8 @@ Add an `NPM_TOKEN` secret (publish scope) to the repo, then run the **release** 
 
 <div align="center">
 
-**⭐ Star this repo if you find it useful — it keeps the sync honest. ⭐**
+**If this project helps you, please ⭐ star it — it takes one second and helps more people find these skills.**
+
+Found a problem or want a change? Open an [Issue](https://github.com/sherlockmen/dsh-mattpocock-skills-plugin/issues) or send a PR — feedback keeps the packaging sharp.
 
 </div>
