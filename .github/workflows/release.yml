@@ -9,14 +9,10 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: '版本增量 (patch | minor | major), 默认 patch'
+        description: '版本: patch | minor | major,或精确版本号(如 1.0.0,首次发布建议直接用 1.0.0);默认 patch'
         required: false
         default: 'patch'
-        type: choice
-        options:
-          - patch
-          - minor
-          - major
+        type: string
 
 permissions:
   contents: write
