@@ -1,11 +1,11 @@
-# dsh-mattpocock-skills bundle patch
+# dsh-mattpocock-skills-plugin bundle patch
 #
 # 把本插件挂进一个 dsh profile 的插件组合层:
-#   dsh plugin --profile <name> add dsh-mattpocock-skills
+#   dsh plugin --profile <name> add dsh-mattpocock-skills-plugin
 # 之后 pnpm 会把包装进 profile,并把下面的条目并入 profile 的
 # dsh.profile.bundles 层(与 dsh-agent-teams 的用法一致)。
 #
 # 插件本身不依赖任何配置;skills 全部来自随包发布的 ./skills 目录。
 - insert:
-    - id: dsh-mattpocock-skills
-      name: dsh-mattpocock-skills
+    - id: dsh-mattpocock-skills-plugin
+      name: dsh-mattpocock-skills-plugin

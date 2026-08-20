@@ -1,5 +1,5 @@
 {
-  "name": "dsh-mattpocock-skills",
+  "name": "dsh-mattpocock-skills-plugin",
   "version": "1.0.0",
   "description": "Matt Pocock's agent skills (mattpocock/skills) for DeepSeek Harness: grilling, spec/ticket flows, TDD, code review, domain modelling and more, packaged as a DSH plugin and as a portable SKILL.md directory bundle.",
   "type": "module",

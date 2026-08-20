@@ -4,7 +4,7 @@
 
 ---
 
-# 🧩 dsh-mattpocock-skills
+# 🧩 dsh-mattpocock-skills-plugin
 
 **Matt Pocock's 35 agent skills for real engineering, packaged for DeepSeek Harness (DSH)**
 
@@ -14,7 +14,7 @@ Auto-synced daily from [mattpocock/skills](https://github.com/mattpocock/skills)
 
 [![GitHub stars](https://img.shields.io/github/stars/sherlockmen/dsh-mattpocock-skills-plugin?style=flat-square)](https://github.com/sherlockmen/dsh-mattpocock-skills-plugin)
 [![License](https://img.shields.io/github/license/sherlockmen/dsh-mattpocock-skills-plugin?style=flat-square)](./LICENSE)
-[![npm version](https://img.shields.io/npm/v/dsh-mattpocock-skills?style=flat-square)](https://www.npmjs.com/package/dsh-mattpocock-skills)
+[![npm version](https://img.shields.io/npm/v/dsh-mattpocock-skills-plugin?style=flat-square)](https://www.npmjs.com/package/dsh-mattpocock-skills-plugin)
 [![Last commit](https://img.shields.io/github/last-commit/sherlockmen/dsh-mattpocock-skills-plugin?style=flat-square)](https://github.com/sherlockmen/dsh-mattpocock-skills-plugin)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek%20Harness-plugin-1e90ff?style=flat-square)](https://github.com/deepseek-ai/deepseek-harness)
 
@@ -69,7 +69,7 @@ DSH discovers the skills immediately (hot-reload — no restart).
 ### Option B — DSH npm plugin *(one command)*
 
 ```bash
-dsh plugin --profile <name> add dsh-mattpocock-skills
+dsh plugin --profile <name> add dsh-mattpocock-skills-plugin
 ```
 
 Restart DSH. The plugin registers all 35 skills at runtime.
@@ -115,7 +115,7 @@ Upstream moves fast; this repo **auto-syncs daily** via GitHub Actions, so you'r
 |---|---|
 | Symlink (`install.sh` default) | `cd <repo> && git pull` — **instant, no restart** |
 | Copy (`install.sh --copy`) | `git pull`, then re-run `bash scripts/install.sh --copy` |
-| npm plugin | `dsh plugin --profile <name> update dsh-mattpocock-skills`, then restart |
+| npm plugin | `dsh plugin --profile <name> update dsh-mattpocock-skills-plugin`, then restart |
 
 ---
 
@@ -178,7 +178,7 @@ To make a skill model-visible, delete `disable-model-invocation: true` from its 
 ├── scripts/check.mjs             # validate frontmatter against DSH rules
 ├── UPSTREAM_COMMIT               # pinned upstream commit of the current snapshot
 ├── .github/workflows/            # sync-upstream (daily) + release (manual npm publish)
-└── package.json                  # the dsh-mattpocock-skills npm plugin
+└── package.json                  # the dsh-mattpocock-skills-plugin npm plugin
 ```
 
 ---

@@ -4,7 +4,7 @@
 
 ---
 
-# 🧩 dsh-mattpocock-skills
+# 🧩 dsh-mattpocock-skills-plugin
 
 **Matt Pocock 的 35 个"真工程"技能,为 DeepSeek Harness(DSH)封装**
 
@@ -14,7 +14,7 @@
 
 [![GitHub stars](https://img.shields.io/github/stars/sherlockmen/dsh-mattpocock-skills-plugin?style=flat-square)](https://github.com/sherlockmen/dsh-mattpocock-skills-plugin)
 [![License](https://img.shields.io/github/license/sherlockmen/dsh-mattpocock-skills-plugin?style=flat-square)](./LICENSE)
-[![npm version](https://img.shields.io/npm/v/dsh-mattpocock-skills?style=flat-square)](https://www.npmjs.com/package/dsh-mattpocock-skills)
+[![npm version](https://img.shields.io/npm/v/dsh-mattpocock-skills-plugin?style=flat-square)](https://www.npmjs.com/package/dsh-mattpocock-skills-plugin)
 [![Last commit](https://img.shields.io/github/last-commit/sherlockmen/dsh-mattpocock-skills-plugin?style=flat-square)](https://github.com/sherlockmen/dsh-mattpocock-skills-plugin)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek%20Harness-plugin-1e90ff?style=flat-square)](https://github.com/deepseek-ai/deepseek-harness)
 
@@ -69,7 +69,7 @@ DSH 立即发现技能(热加载——无需重启)。
 ### 方式 B:DSH npm 插件 *(一条命令)*
 
 ```bash
-dsh plugin --profile <名字> add dsh-mattpocock-skills
+dsh plugin --profile <名字> add dsh-mattpocock-skills-plugin
 ```
 
 重启 DSH。插件在运行时注册全部 35 个技能。
@@ -115,7 +115,7 @@ DSH 通过**两条触发路径**暴露技能:
 |---|---|
 | 软链(`install.sh` 默认) | `cd <仓库> && git pull`——**立即生效,无需重启** |
 | 复制(`install.sh --copy`) | `git pull`,然后重跑 `bash scripts/install.sh --copy` |
-| npm 插件 | `dsh plugin --profile <名字> update dsh-mattpocock-skills`,然后重启 |
+| npm 插件 | `dsh plugin --profile <名字> update dsh-mattpocock-skills-plugin`,然后重启 |
 
 ---
 
@@ -178,7 +178,7 @@ DSH 通过**两条触发路径**暴露技能:
 ├── scripts/check.mjs             # 按 DSH 规则校验 frontmatter
 ├── UPSTREAM_COMMIT               # 当前快照对应的上游 commit
 ├── .github/workflows/            # 定时同步 + 手动发版
-└── package.json                  # dsh-mattpocock-skills npm 插件
+└── package.json                  # dsh-mattpocock-skills-plugin npm 插件
 ```
 
 ---
