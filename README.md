@@ -24,15 +24,15 @@ Auto-synced daily from [mattpocock/skills](https://github.com/mattpocock/skills)
 
 ## 📖 Table of Contents
 
-- [✨ Features](#features)
-- [🚀 Quick Start](#quick-start)
-- [🔄 Staying Up-to-Date](#staying-up-to-date)
-- [🧠 Which Skills Does the Model See?](#which-skills-does-the-model-see)
-- [📦 Skill List](#skill-list)
-- [🗂️ Project Structure](#project-structure)
-- [🛠️ Development & Sync](#development--sync)
-- [❓ FAQ](#faq)
-- [📄 License & Credits](#license--credits)
+- [✨ Features](#-features)
+- [🚀 Quick Start](#-quick-start)
+- [🔄 Staying Up-to-Date](#-staying-up-to-date)
+- [🧠 Which Skills Does the Model See?](#-which-skills-does-the-model-see)
+- [📦 Skill List](#-skill-list)
+- [🗂️ Project Structure](#️-project-structure)
+- [🛠️ Development & Sync](#️-development--sync)
+- [❓ FAQ](#-faq)
+- [📄 License & Credits](#-license--credits)
 
 ---
 
